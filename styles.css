@@ -123,3 +123,19 @@ justify-content:center;
 }
 
 }
+
+.profile-pic {
+
+width: 180px;
+
+height: 180px;
+
+border-radius: 50%;
+
+object-fit: cover;
+
+margin-bottom: 30px;
+
+box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+}

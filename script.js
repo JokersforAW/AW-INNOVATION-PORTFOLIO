@@ -1,1 +1,1 @@
-console.log("AW Portfolio Loaded");
+console.log("Waiz Innovation Hub Loaded");

@@ -18,7 +18,7 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:25px 8%;
+padding:20px 6%;
 background:white;
 position:sticky;
 top:0;
@@ -47,19 +47,24 @@ nav a:hover
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:100px 8%;
-min-height:90vh;
-gap:80px;
+gap:60px;
+
+padding:80px 8%;
+min-height:85vh;
+
+flex-wrap:wrap;
 }
 
 .hero-text-container{
 flex:1;
+min-width:400px;
 }
 
 .hero-image-container{
 flex:1;
 display:flex;
 justify-content:center;
+min-width:300px;
 }
 
 .profile-pic{

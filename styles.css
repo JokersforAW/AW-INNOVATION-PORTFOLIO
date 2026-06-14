@@ -395,3 +395,51 @@ grid-template-columns:1fr;
 .gallery-page {
  ...
 }
+
+/* ========================= */
+/* ANALYTICS PAGE           */
+/* ========================= */
+
+.analytics-page {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 40px;
+}
+
+.analytics-page h1 {
+    font-size: 48px;
+    max-width: 800px;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    color: #0b1d3a;
+}
+
+.analytics-description {
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    color: #555;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    transition: 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card h3 {
+    margin-bottom: 15px;
+    color: #0b1d3a;
+}

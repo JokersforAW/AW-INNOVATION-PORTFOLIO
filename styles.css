@@ -368,10 +368,10 @@ margin:80px auto;
     color: #0b1d3a;
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+.gallery-grid{
+display:grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap:30px;
 }
 
  {
@@ -488,4 +488,13 @@ line-height: 1.6;
 max-width: 100%;
 }
 
+}
+
+.gallery-intro{
+max-width: 900px;
+font-size: 22px;
+line-height: 1.6;
+color: #071633;
+margin-bottom: 50px;
+font-weight: 600;
 }

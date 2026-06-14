@@ -396,6 +396,15 @@ color:#667085;
 font-weight:500;
 }
 
+.gallery-item span{
+font-size:11px;
+letter-spacing:2px;
+color:#D4A017;
+font-weight:700;
+display:block;
+margin-top:12px;
+}
+
 /* existing code */
 
 .hero-section {

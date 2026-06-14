@@ -357,10 +357,9 @@ grid-template-columns:1fr;
 /* AI STUDIO GALLERY PAGE   */
 /* ========================= */
 
-.gallery-page {
-    max-width: 1300px;
-    margin: 100px auto;
-    padding: 0 40px;
+.gallery-page{
+max-width:1200px;
+margin:80px auto;
 }
 
 .gallery-page h1 {

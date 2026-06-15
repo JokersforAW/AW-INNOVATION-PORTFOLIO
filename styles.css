@@ -642,3 +642,19 @@ color:#071633;
 margin-bottom:12px;
 color:#667085;
 }
+
+.back-button{
+max-width:1200px;
+margin:40px auto 0 auto;
+padding:0 40px;
+}
+
+.back-button a{
+text-decoration:none;
+font-weight:600;
+color:#071633;
+}
+
+.back-button a:hover{
+color:#D4A017;
+}

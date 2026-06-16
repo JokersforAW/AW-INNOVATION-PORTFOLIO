@@ -703,3 +703,71 @@ font-weight:600;
 color:#D4A017;
 letter-spacing:1px;
 }
+
+/* ========================= */
+/* AI GALLERY PAGE */
+/* ========================= */
+
+.gallery-page{
+max-width:1300px;
+margin:80px auto;
+padding:0 40px;
+}
+
+.gallery-page h1{
+font-size:48px;
+margin-bottom:20px;
+color:#071633;
+}
+
+.gallery-intro{
+max-width:900px;
+font-size:20px;
+line-height:1.7;
+color:#667085;
+margin-bottom:60px;
+}
+
+.gallery-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+}
+
+.gallery-link{
+text-decoration:none;
+color:inherit;
+display:block;
+}
+
+.gallery-item{
+transition:.3s;
+cursor:pointer;
+}
+
+.gallery-item:hover{
+transform:translateY(-6px);
+}
+
+.gallery-item img{
+width:100%;
+display:block;
+border-radius:18px;
+box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.gallery-item span{
+font-size:11px;
+letter-spacing:2px;
+color:#D4A017;
+font-weight:700;
+display:block;
+margin-top:14px;
+}
+
+.gallery-item p{
+font-size:14px;
+line-height:1.6;
+color:#667085;
+margin-top:10px;
+}

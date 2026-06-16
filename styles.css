@@ -597,15 +597,27 @@ color:#86efac;
 
 /* DASHBOARD */
 
-.fake-chart{
-height:160px;
-background:linear-gradient(
-to top,
-#dbeafe,
-#eff6ff
-);
-border-radius:12px;
+.chart-bars{
+height:180px;
+display:flex;
+align-items:flex-end;
+gap:12px;
 margin:20px 0;
+padding:20px;
+background:#f8fafc;
+border-radius:14px;
+}
+
+.bar{
+flex:1;
+background:#071633;
+border-radius:8px 8px 0 0;
+transition:.3s;
+}
+
+.bar:hover{
+transform:scaleY(1.05);
+background:#D4A017;
 }
 
 

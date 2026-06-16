@@ -964,7 +964,7 @@ z-index:2;
 
 /* LINES */
 
-.line{
+.trend-line{
 height:4px;
 background:#D4A017;
 position:absolute;
@@ -972,35 +972,35 @@ transform-origin:left;
 border-radius:10px;
 }
 
-.l1{
+.tl1{
 left:60px;
 bottom:46px;
 width:135px;
 transform:rotate(22deg);
 }
 
-.l2{
+.tl2{
 left:190px;
 bottom:96px;
 width:130px;
 transform:rotate(-10deg);
 }
 
-.l3{
+.tl3{
 left:320px;
 bottom:76px;
 width:145px;
 transform:rotate(28deg);
 }
 
-.l4{
+.tl4{
 left:450px;
 bottom:146px;
 width:135px;
 transform:rotate(-12deg);
 }
 
-.l5{
+.tl5{
 left:580px;
 bottom:116px;
 width:145px;

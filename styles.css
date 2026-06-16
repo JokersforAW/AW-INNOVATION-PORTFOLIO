@@ -537,6 +537,8 @@ grid-template-columns:1fr;
 /* ANALYTICS KPI */
 /* =============================== */
 
+/* KPI GRID */
+
 .kpi-grid{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -544,20 +546,52 @@ gap:20px;
 margin-bottom:50px;
 }
 
+
+/* KPI CARD */
+
 .kpi-card{
 background:#071633;
 padding:30px;
-border-radius:18px;
+border-radius:20px;
 color:white;
+transition:all .3s ease;
 }
 
+.kpi-card:hover{
+transform:translateY(-5px);
+}
+
+
+/* BIG NUMBER */
+
 .kpi-card h3{
-font-size:36px;
+font-size:42px;
 margin-bottom:10px;
 }
 
-.kpi-card p{
-opacity:.8;
+
+/* KPI TITLE */
+
+.kpi-card h4{
+font-size:18px;
+font-weight:600;
+margin-bottom:15px;
+color:#dbeafe;
+}
+
+
+/* SMALL STATUS */
+
+.kpi-change{
+font-size:14px;
+line-height:1.5;
+}
+
+
+/* GREEN TEXT */
+
+.positive{
+color:#86efac;
 }
 
 

@@ -452,9 +452,9 @@ font-size:15px;
 /* ===================================== */
 
 .analytics-page{
-max-width:1250px;
-margin:80px auto;
-padding:0 40px;
+max-width:1400px;
+margin:100px auto;
+padding:0 80px;
 }
 
 .analytics-page h1{
@@ -490,7 +490,8 @@ margin-bottom:60px;
 
 .kpi-card{
 background:#071633;
-padding:32px;
+padding:40px;
+min-height:180px;
 border-radius:22px;
 color:white;
 transition:all .35s ease;
@@ -503,7 +504,7 @@ box-shadow:0 12px 30px rgba(0,0,0,.12);
 }
 
 .kpi-card h3{
-font-size:42px;
+font-size:48px;
 margin-bottom:10px;
 font-weight:700;
 }

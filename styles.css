@@ -928,3 +928,92 @@ height:180px;
 }
 
 }
+
+/* ========================= */
+/* LINE CHART */
+/* ========================= */
+
+.line-chart{
+height:250px;
+position:relative;
+margin-top:40px;
+background:#f8fafc;
+border-radius:20px;
+padding:20px;
+}
+
+
+/* POINTS */
+
+.point{
+width:14px;
+height:14px;
+background:#071633;
+border-radius:50%;
+position:absolute;
+z-index:2;
+}
+
+.p1{left:50px; bottom:40px;}
+.p2{left:180px; bottom:90px;}
+.p3{left:310px; bottom:70px;}
+.p4{left:440px; bottom:140px;}
+.p5{left:570px; bottom:110px;}
+.p6{left:700px; bottom:180px;}
+
+
+/* LINES */
+
+.line{
+height:4px;
+background:#D4A017;
+position:absolute;
+transform-origin:left;
+border-radius:10px;
+}
+
+.l1{
+left:60px;
+bottom:46px;
+width:135px;
+transform:rotate(22deg);
+}
+
+.l2{
+left:190px;
+bottom:96px;
+width:130px;
+transform:rotate(-10deg);
+}
+
+.l3{
+left:320px;
+bottom:76px;
+width:145px;
+transform:rotate(28deg);
+}
+
+.l4{
+left:450px;
+bottom:146px;
+width:135px;
+transform:rotate(-12deg);
+}
+
+.l5{
+left:580px;
+bottom:116px;
+width:145px;
+transform:rotate(28deg);
+}
+
+
+/* MONTHS */
+
+.month-labels{
+display:flex;
+justify-content:space-around;
+margin-top:20px;
+font-weight:600;
+color:#667085;
+}

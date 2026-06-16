@@ -817,3 +817,58 @@ font-size:17px;
 }
 
 }
+
+/* FEATURED ENTERPRISE SYSTEMS */
+
+.featured-systems{
+margin-top:80px;
+}
+
+.featured-systems h3{
+font-size:36px;
+margin-bottom:35px;
+color:#071633;
+}
+
+.system-preview-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.system-preview{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.05);
+overflow:hidden;
+}
+
+.system-preview img{
+width:100%;
+height:220px;          /* THIS controls size */
+object-fit:cover;     /* crops nicely */
+border-radius:14px;
+display:block;
+}
+
+.system-preview p{
+margin-top:15px;
+font-size:16px;
+font-weight:600;
+color:#071633;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.system-preview-grid{
+grid-template-columns:1fr;
+}
+
+.system-preview img{
+height:180px;
+}
+
+}

@@ -729,3 +729,50 @@ grid-template-columns:1fr;
 }
 
 }
+
+/* FEATURED SYSTEMS */
+
+.featured-systems{
+margin-top:80px;
+}
+
+.featured-systems h3{
+font-size:32px;
+margin-bottom:30px;
+color:#071633;
+}
+
+.system-preview-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.system-preview{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.system-preview img{
+width:100%;
+border-radius:14px;
+display:block;
+}
+
+.system-preview p{
+margin-top:15px;
+font-weight:600;
+color:#071633;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.system-preview-grid{
+grid-template-columns:1fr;
+}
+
+}

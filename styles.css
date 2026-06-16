@@ -776,3 +776,44 @@ grid-template-columns:1fr;
 }
 
 }
+
+/* THINKING BOARD */
+
+.thinking-board{
+margin-top:50px;
+}
+
+.thought-item{
+padding:35px 0;
+border-bottom:1px solid #e5e7eb;
+display:flex;
+gap:40px;
+align-items:flex-start;
+}
+
+.thought-item span{
+font-size:28px;
+font-weight:700;
+color:#D4A017;
+min-width:50px;
+}
+
+.thought-item p{
+font-size:20px;
+line-height:1.8;
+color:#071633;
+max-width:900px;
+}
+
+@media(max-width:768px){
+
+.thought-item{
+flex-direction:column;
+gap:15px;
+}
+
+.thought-item p{
+font-size:17px;
+}
+
+}

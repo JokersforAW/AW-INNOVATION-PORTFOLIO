@@ -704,9 +704,9 @@ color:#D4A017;
 letter-spacing:1px;
 }
 
-/* ========================= */
-/* AI GALLERY PAGE */
-/* ========================= */
+/* ====================================== */
+/* AI STUDIO GALLERY PAGE                 */
+/* ====================================== */
 
 .gallery-page{
 max-width:1300px;
@@ -721,7 +721,7 @@ color:#071633;
 }
 
 .gallery-intro{
-max-width:900px;
+max-width:850px;
 font-size:20px;
 line-height:1.7;
 color:#667085;
@@ -731,7 +731,7 @@ margin-bottom:60px;
 .gallery-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:30px;
+gap:32px;
 }
 
 .gallery-link{
@@ -741,8 +741,8 @@ display:block;
 }
 
 .gallery-item{
-transition:.3s;
 cursor:pointer;
+transition:.3s ease;
 }
 
 .gallery-item:hover{
@@ -767,7 +767,7 @@ margin-top:14px;
 
 .gallery-item p{
 font-size:14px;
-line-height:1.6;
+line-height:1.5;
 color:#667085;
 margin-top:10px;
 }

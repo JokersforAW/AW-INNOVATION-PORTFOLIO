@@ -1,1 +1,1054 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kampong Bliss — Game Design Document</title>
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root {
+--sun: #FFB830;
+--coral: #FF7F5C;
+--teal: #2ABFBF;
+--jungle: #3D9970;
+--sky: #87CEEB;
+--dusk: #FF6B6B;
+--cream: #FFF8EE;
+--bark: #8B5E3C;
+--leaf: #52B788;
+--sand: #F4D5A0;
+--water: #48CAE4;
+--night: #1A2744;
+--pink: #FFB3C6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(--cream);
+font-family: 'Quicksand', sans-serif;
+color: #3A2E1F;
+overflow-x: hidden;
+}
+
+/* Floating Particles */
+.particle {
+position: fixed;
+pointer-events: none;
+font-size: 1.4rem;
+animation: floatUp linear infinite;
+opacity: 0;
+z-index: 0;
+}
+@keyframes floatUp {
+0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+10% { opacity: 0.7; }
+90% { opacity: 0.5; }
+100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* HERO */
+.hero {
+position: relative;
+min-height: 100vh;
+background: linear-gradient(180deg, #FFA552 0%, #FF7043 30%, #FF8A65 55%, #87CEEB 100%);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+text-align: center;
+padding: 2rem;
+}
+
+.hero-sun {
+position: absolute;
+top: 10%;
+left: 50%;
+transform: translateX(-50%);
+width: 110px; height: 110px;
+background: radial-gradient(circle, #FFEF61 30%, #FFB830 70%, transparent 100%);
+border-radius: 50%;
+box-shadow: 0 0 80px 40px rgba(255,184,48,0.5);
+animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+0%,100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 80px 40px rgba(255,184,48,0.5); }
+50% { transform: translateX(-50%) scale(1.07); box-shadow: 0 0 100px 55px rgba(255,184,48,0.6); }
+}
+
+.hero-mountains {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 220px;
+}
+.mountain { position: absolute; bottom: 0; }
+.m1 { left: -5%; width: 55%; height: 180px; background: #3D9970; clip-path: polygon(50% 0%,100% 100%,0 100%); }
+.m2 { left: 30%; width: 40%; height: 140px; background: #52B788; clip-path: polygon(50% 0%,100% 100%,0 100%); }
+.m3 { right: -5%; width: 50%; height: 160px; background: #2E7D5E; clip-path: polygon(50% 0%,100% 100%,0 100%); }
+
+.hero-water {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 70px;
+background: linear-gradient(180deg, #48CAE4 0%, #0096C7 100%);
+border-radius: 60% 60% 0 0 / 30px 30px 0 0;
+}
+
+.hero-title {
+position: relative;
+z-index: 2;
+margin-top: -2rem;
+}
+.title-main {
+font-family: 'Pacifico', cursive;
+font-size: clamp(3rem, 12vw, 6rem);
+color: #fff;
+text-shadow: 0 4px 0 #c05000, 0 8px 20px rgba(0,0,0,0.25);
+line-height: 1;
+letter-spacing: -1px;
+}
+.title-sub {
+font-family: 'Bubblegum Sans', cursive;
+font-size: clamp(1rem, 4vw, 1.6rem);
+color: #FFF8EE;
+text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+margin-top: 0.5rem;
+letter-spacing: 2px;
+}
+.title-badge {
+display: inline-block;
+background: var(--sun);
+color: #5A2D00;
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.85rem;
+padding: 4px 14px;
+border-radius: 999px;
+margin-top: 1rem;
+box-shadow: 0 3px 0 #c08000;
+letter-spacing: 1px;
+}
+
+.scroll-hint {
+position: absolute;
+bottom: 90px;
+left: 50%;
+transform: translateX(-50%);
+color: rgba(255,255,255,0.85);
+font-size: 0.85rem;
+font-family: 'Bubblegum Sans', cursive;
+letter-spacing: 1px;
+animation: bounce 1.8s ease-in-out infinite;
+z-index: 2;
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
+
+/* SECTIONS */
+.section {
+padding: 4rem 1.5rem;
+max-width: 860px;
+margin: 0 auto;
+}
+
+.section-label {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.8rem;
+letter-spacing: 3px;
+color: var(--coral);
+text-transform: uppercase;
+margin-bottom: 0.4rem;
+}
+.section-title {
+font-family: 'Pacifico', cursive;
+font-size: clamp(1.8rem, 6vw, 2.8rem);
+line-height: 1.15;
+color: var(--bark);
+margin-bottom: 1.5rem;
+}
+
+/* GAME HOOK CARD */
+.hook-card {
+background: linear-gradient(135deg, #FF7F5C, #FFB830);
+border-radius: 24px;
+padding: 2.5rem 2rem;
+color: white;
+text-align: center;
+box-shadow: 0 8px 0 #c05000, 0 16px 40px rgba(255,127,92,0.35);
+margin-bottom: 3rem;
+position: relative;
+overflow: hidden;
+}
+.hook-card::before {
+content: '';
+position: absolute; inset: 0;
+background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 60%);
+}
+.hook-emoji { font-size: 3rem; margin-bottom: 0.75rem; display: block; }
+.hook-text {
+font-family: 'Bubblegum Sans', cursive;
+font-size: clamp(1.15rem, 4vw, 1.6rem);
+line-height: 1.5;
+position: relative;
+}
+
+/* TITLE CARDS */
+.titles-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+gap: 1rem;
+margin-bottom: 3rem;
+}
+.title-card {
+background: white;
+border-radius: 20px;
+padding: 1.5rem 1.25rem;
+box-shadow: 0 4px 0 #e0c090, 0 8px 24px rgba(0,0,0,0.07);
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+transition: transform 0.2s, box-shadow 0.2s;
+cursor: default;
+border: 2px solid #F4D5A0;
+}
+.title-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 0 #e0c090, 0 16px 36px rgba(0,0,0,0.1);
+}
+.title-card-icon { font-size: 2.2rem; flex-shrink: 0; }
+.title-card-name {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 1.05rem;
+color: var(--bark);
+line-height: 1.2;
+margin-bottom: 4px;
+}
+.title-card-tagline { font-size: 0.78rem; color: #8B7355; line-height: 1.4; }
+
+/* GAMEPLAY LOOP */
+.loop-strip {
+display: flex;
+align-items: center;
+gap: 0;
+overflow-x: auto;
+padding-bottom: 0.5rem;
+margin-bottom: 3rem;
+scrollbar-width: none;
+}
+.loop-strip::-webkit-scrollbar { display: none; }
+.loop-step {
+flex: 0 0 auto;
+background: white;
+border: 2.5px solid var(--sand);
+border-radius: 18px;
+padding: 1.25rem 1rem;
+text-align: center;
+width: 140px;
+box-shadow: 0 4px 0 #e0c090;
+}
+.loop-step-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.loop-step-label {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.88rem;
+color: var(--bark);
+line-height: 1.3;
+}
+.loop-arrow {
+flex: 0 0 auto;
+font-size: 1.4rem;
+color: var(--coral);
+padding: 0 0.4rem;
+}
+
+/* MECHANICS GRID */
+.mechanics-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+gap: 1rem;
+margin-bottom: 3rem;
+}
+.mechanic-chip {
+border-radius: 16px;
+padding: 1.25rem 1rem;
+text-align: center;
+box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+transition: transform 0.2s;
+}
+.mechanic-chip:hover { transform: translateY(-3px); }
+.mechanic-chip .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+.mechanic-chip h4 {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.95rem;
+margin-bottom: 0.3rem;
+}
+.mechanic-chip p { font-size: 0.75rem; line-height: 1.4; opacity: 0.85; }
+.chip-teal { background: #C8F4F4; color: #1A6868; box-shadow: 0 4px 0 #7DCECE; }
+.chip-orange { background: #FFE8D6; color: #7A3500; box-shadow: 0 4px 0 #FFBF8A; }
+.chip-green { background: #D4EDDA; color: #1A5E2A; box-shadow: 0 4px 0 #8CD49A; }
+.chip-pink { background: #FFD6E0; color: #7A1A2E; box-shadow: 0 4px 0 #FFAAB8; }
+.chip-yellow { background: #FFF3C4; color: #6B4C00; box-shadow: 0 4px 0 #FFD966; }
+.chip-blue { background: #D6EEFF; color: #0A3D62; box-shadow: 0 4px 0 #8AC6EE; }
+
+/* REWARDS */
+.rewards-list {
+display: flex;
+flex-direction: column;
+gap: 0.75rem;
+margin-bottom: 3rem;
+}
+.reward-row {
+background: white;
+border-radius: 16px;
+border: 2px solid var(--sand);
+padding: 1rem 1.25rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+box-shadow: 0 3px 0 #e0c090;
+transition: transform 0.2s;
+}
+.reward-row:hover { transform: translateX(4px); }
+.reward-icon { font-size: 1.8rem; flex-shrink: 0; }
+.reward-text h4 {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.98rem;
+color: var(--bark);
+}
+.reward-text p { font-size: 0.78rem; color: #8B7355; margin-top: 2px; }
+
+/* VISUAL PALETTE */
+.palette-strip {
+display: flex;
+gap: 0.6rem;
+flex-wrap: wrap;
+margin-bottom: 1.5rem;
+}
+.swatch {
+width: 52px; height: 52px;
+border-radius: 14px;
+box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.1rem;
+position: relative;
+}
+.swatch span {
+position: absolute;
+bottom: -20px;
+font-size: 0.6rem;
+color: #8B7355;
+white-space: nowrap;
+font-weight: 600;
+}
+
+/* UI MOCKUP */
+.ui-mockup {
+background: linear-gradient(180deg, #87CEEB 0%, #B0E0FF 40%, #52B788 70%, #3D9970 100%);
+border-radius: 30px;
+padding: 2rem 1.5rem;
+position: relative;
+overflow: hidden;
+margin-bottom: 3rem;
+box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+border: 3px solid white;
+min-height: 320px;
+}
+.ui-top-bar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1rem;
+}
+.ui-coin {
+background: var(--sun);
+border-radius: 999px;
+padding: 5px 14px;
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.88rem;
+color: #5A3000;
+box-shadow: 0 3px 0 #c08000;
+display: flex; align-items: center; gap: 4px;
+}
+.ui-progress {
+background: rgba(255,255,255,0.4);
+border-radius: 999px;
+height: 10px;
+width: 120px;
+overflow: hidden;
+backdrop-filter: blur(4px);
+}
+.ui-progress-fill {
+height: 100%;
+width: 65%;
+background: linear-gradient(90deg, var(--sun), var(--coral));
+border-radius: 999px;
+}
+.ui-scene {
+display: flex;
+justify-content: center;
+gap: 1rem;
+margin: 1rem 0;
+flex-wrap: wrap;
+}
+.kampong-house {
+background: var(--sand);
+width: 70px; height: 70px;
+border-radius: 12px;
+border: 2px solid var(--bark);
+display: flex; flex-direction: column;
+align-items: center; justify-content: flex-end;
+padding-bottom: 6px;
+font-size: 1.6rem;
+position: relative;
+box-shadow: 0 4px 0 rgba(139,94,60,0.4);
+}
+.kampong-house::before {
+content: '';
+position: absolute;
+top: -22px; left: -8px; right: -8px;
+height: 28px;
+background: var(--coral);
+clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+}
+.ui-tap-hint {
+text-align: center;
+background: rgba(255,255,255,0.6);
+backdrop-filter: blur(8px);
+border-radius: 20px;
+padding: 0.75rem 1.5rem;
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.9rem;
+color: var(--bark);
+margin-top: 1rem;
+animation: tapPulse 2s ease-in-out infinite;
+}
+@keyframes tapPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+
+/* MVP TABLE */
+.mvp-list {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 1rem;
+margin-bottom: 3rem;
+}
+.mvp-item {
+background: white;
+border-radius: 18px;
+padding: 1.25rem;
+border: 2px solid var(--sand);
+box-shadow: 0 4px 0 #e0c090;
+display: flex;
+gap: 0.75rem;
+align-items: flex-start;
+}
+.mvp-num {
+background: var(--coral);
+color: white;
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.85rem;
+width: 28px; height: 28px;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+box-shadow: 0 2px 0 #c05000;
+}
+.mvp-text h4 {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.92rem;
+color: var(--bark);
+margin-bottom: 3px;
+}
+.mvp-text p { font-size: 0.76rem; color: #8B7355; line-height: 1.4; }
+
+/* EXPANSION TIMELINE */
+.timeline {
+position: relative;
+padding-left: 2.5rem;
+margin-bottom: 3rem;
+}
+.timeline::before {
+content: '';
+position: absolute;
+left: 12px; top: 0; bottom: 0;
+width: 3px;
+background: linear-gradient(180deg, var(--coral), var(--teal));
+border-radius: 3px;
+}
+.timeline-item {
+position: relative;
+margin-bottom: 1.5rem;
+}
+.timeline-dot {
+position: absolute;
+left: -2.1rem;
+top: 4px;
+width: 22px; height: 22px;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 0.7rem;
+font-family: 'Bubblegum Sans', cursive;
+color: white;
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.dot-coral { background: var(--coral); }
+.dot-teal { background: var(--teal); }
+.dot-sun { background: var(--sun); }
+.dot-green { background: var(--jungle); }
+.timeline-item h4 {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 1rem;
+color: var(--bark);
+margin-bottom: 4px;
+}
+.timeline-item p { font-size: 0.8rem; color: #8B7355; line-height: 1.5; }
+.phase-badge {
+display: inline-block;
+font-size: 0.65rem;
+padding: 2px 8px;
+border-radius: 999px;
+margin-bottom: 6px;
+font-weight: 700;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+}
+.badge-mvp { background: #FFE8D6; color: #7A3500; }
+.badge-v1 { background: #C8F4F4; color: #1A6868; }
+.badge-v2 { background: #FFF3C4; color: #6B4C00; }
+.badge-season { background: #D6EEFF; color: #0A3D62; }
+
+/* VIRAL FEATURES */
+.viral-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+gap: 0.75rem;
+margin-bottom: 3rem;
+}
+.viral-card {
+background: linear-gradient(135deg, #FF7F5C22, #FFB83022);
+border: 2px solid var(--sand);
+border-radius: 16px;
+padding: 1rem;
+text-align: center;
+transition: transform 0.2s, border-color 0.2s;
+}
+.viral-card:hover { transform: scale(1.04); border-color: var(--coral); }
+.viral-card .vi { font-size: 1.8rem; margin-bottom: 0.4rem; }
+.viral-card h4 {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.88rem;
+color: var(--bark);
+margin-bottom: 3px;
+}
+.viral-card p { font-size: 0.72rem; color: #8B7355; line-height: 1.35; }
+
+/* EMOTIONAL FOOTER */
+.footer-card {
+background: linear-gradient(135deg, #1A2744, #2E4A6E);
+border-radius: 28px;
+padding: 3rem 2rem;
+text-align: center;
+color: white;
+position: relative;
+overflow: hidden;
+margin-bottom: 3rem;
+}
+.footer-card::before {
+content: '';
+position: absolute;
+top: -50%; left: -50%;
+width: 200%; height: 200%;
+background: radial-gradient(circle at 60% 40%, rgba(255,184,48,0.15), transparent 50%),
+radial-gradient(circle at 30% 70%, rgba(72,202,228,0.1), transparent 40%);
+}
+.footer-stars { font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 1rem; }
+.footer-quote {
+font-family: 'Pacifico', cursive;
+font-size: clamp(1.1rem, 4vw, 1.7rem);
+line-height: 1.5;
+color: #FFF8EE;
+position: relative;
+margin-bottom: 1.5rem;
+}
+.footer-sub {
+font-family: 'Bubblegum Sans', cursive;
+font-size: 0.9rem;
+color: rgba(255,248,238,0.7);
+letter-spacing: 1.5px;
+position: relative;
+}
+
+/* Divider */
+.tropical-divider {
+text-align: center;
+font-size: 1.5rem;
+margin: 0.5rem 0 2rem;
+letter-spacing: 8px;
+opacity: 0.6;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+.loop-step { width: 120px; }
+.title-card { gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating particles -->
+<script>
+const emojis = ['🌴','🥥','🌺','🌊','✨','🐠','🌸','☀️','🍃','🦋'];
+for (let i = 0; i < 14; i++) {
+const p = document.createElement('div');
+p.className = 'particle';
+p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+p.style.left = Math.random() * 100 + 'vw';
+p.style.animationDuration = (10 + Math.random() * 20) + 's';
+p.style.animationDelay = (Math.random() * 15) + 's';
+p.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+document.body.appendChild(p);
+}
+</script>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-sun"></div>
+<div class="hero-title">
+<div class="title-main">Kampong Bliss</div>
+<div class="title-sub">A Tropical Tap Adventure</div>
+<div class="title-badge">🌴 Inspired by Brunei Darussalam 🌴</div>
+</div>
+<div class="hero-mountains">
+<div class="mountain m1"></div>
+<div class="mountain m2"></div>
+<div class="mountain m3"></div>
+</div>
+<div class="hero-water"></div>
+<div class="scroll-hint">✦ Scroll to explore the design ✦</div>
+</section>
+
+<!-- 1. TITLE IDEAS -->
+<section class="section">
+<div class="section-label">01 — Game Title Ideas</div>
+<div class="section-title">Pick Your Name</div>
+<div class="titles-grid">
+<div class="title-card">
+<div class="title-card-icon">🏡</div>
+<div>
+<div class="title-card-name">Kampong Bliss</div>
+<div class="title-card-tagline">Warm village life in a peaceful tropical setting</div>
+</div>
+</div>
+<div class="title-card">
+<div class="title-card-icon">🥥</div>
+<div>
+<div class="title-card-name">Coconut Cove</div>
+<div class="title-card-tagline">Tap coconuts, build your riverside village</div>
+</div>
+</div>
+<div class="title-card">
+<div class="title-card-icon">🎣</div>
+<div>
+<div class="title-card-name">Sungai Tap</div>
+<div class="title-card-tagline">"Sungai" (river) — the heart of kampong life</div>
+</div>
+</div>
+<div class="title-card">
+<div class="title-card-icon">🌅</div>
+<div>
+<div class="title-card-name">Sunset Kedai</div>
+<div class="title-card-tagline">Run a cozy riverside stall at golden hour</div>
+</div>
+</div>
+<div class="title-card">
+<div class="title-card-icon">🌧️</div>
+<div>
+<div class="title-card-name">Hujan Café</div>
+<div class="title-card-tagline">"Hujan" (rain) — a rainy day café simulator</div>
+</div>
+</div>
+<div class="title-card">
+<div class="title-card-icon">🛶</div>
+<div>
+<div class="title-card-name">Perahu Dreams</div>
+<div class="title-card-tagline">Gentle riverboat delivery & collection idle</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 2. GAMEPLAY HOOK -->
+<section class="section">
+<div class="section-label">02 — One-Sentence Hook</div>
+<div class="section-title">The Big Idea</div>
+<div class="hook-card">
+<span class="hook-emoji">🌴</span>
+<div class="hook-text">
+"Tap coconuts, collect sunshine, feed your village, and build the most beautiful kampong on the river — one peaceful tap at a time."
+</div>
+</div>
+</section>
+
+<!-- 3. GAMEPLAY LOOP -->
+<section class="section">
+<div class="section-label">03 — Core Loop</div>
+<div class="section-title">Tap. Earn. Grow.</div>
+<div class="loop-strip">
+<div class="loop-step">
+<div class="loop-step-icon">👆</div>
+<div class="loop-step-label">Tap coconut trees &amp; river fish</div>
+</div>
+<div class="loop-arrow">→</div>
+<div class="loop-step">
+<div class="loop-step-icon">🪙</div>
+<div class="loop-step-label">Earn ringgit coins &amp; gems</div>
+</div>
+<div class="loop-arrow">→</div>
+<div class="loop-step">
+<div class="loop-step-icon">🏡</div>
+<div class="loop-step-label">Upgrade kampong buildings</div>
+</div>
+<div class="loop-arrow">→</div>
+<div class="loop-step">
+<div class="loop-step-icon">🐱</div>
+<div class="loop-step-label">Unlock cute pets &amp; characters</div>
+</div>
+<div class="loop-arrow">→</div>
+<div class="loop-step">
+<div class="loop-step-icon">💤</div>
+<div class="loop-step-label">Idle earnings while away</div>
+</div>
+<div class="loop-arrow">→</div>
+<div class="loop-step">
+<div class="loop-step-icon">🌟</div>
+<div class="loop-step-label">Return to collect &amp; discover</div>
+</div>
+</div>
+</section>
+
+<!-- 4. CORE MECHANICS -->
+<section class="section">
+<div class="section-label">04 — Core Mechanics</div>
+<div class="section-title">How It Plays</div>
+<div class="mechanics-grid">
+<div class="mechanic-chip chip-teal">
+<div class="icon">🥥</div>
+<h4>Coconut Tap</h4>
+<p>Tap glowing coconut trees. Each tap shakes the tree with a satisfying bounce and drops a coin.</p>
+</div>
+<div class="mechanic-chip chip-orange">
+<div class="icon">🎣</div>
+<h4>River Fishing</h4>
+<p>Tap rippling water spots to pull fish. Rare fish sparkle and give bonus gems.</p>
+</div>
+<div class="mechanic-chip chip-green">
+<div class="icon">🏡</div>
+<h4>Village Builder</h4>
+<p>Drag decorations to place them. Tap buildings to upgrade and unlock new income sources.</p>
+</div>
+<div class="mechanic-chip chip-pink">
+<div class="icon">🌧️</div>
+<h4>Rain Bonus</h4>
+<p>When tropical rain falls, tap rain drops for double earnings. A beautiful visual event.</p>
+</div>
+<div class="mechanic-chip chip-yellow">
+<div class="icon">🛶</div>
+<h4>River Deliveries</h4>
+<p>Swipe goods onto passing boats. Each successful swipe earns bonus coins and XP.</p>
+</div>
+<div class="mechanic-chip chip-blue">
+<div class="icon">💤</div>
+<h4>Idle Harvesting</h4>
+<p>Village earns while you're away. Return to collect a satisfying pile of rewards.</p>
+</div>
+</div>
+</section>
+
+<!-- 5. REWARD SYSTEMS -->
+<section class="section">
+<div class="section-label">05 — Reward Systems</div>
+<div class="section-title">Feel the Love</div>
+<div class="rewards-list">
+<div class="reward-row">
+<div class="reward-icon">🌅</div>
+<div class="reward-text">
+<h4>Daily Sunrise Gift</h4>
+<p>Log in each morning to unwrap a beautiful animated gift box. Streak bonuses for consecutive days.</p>
+</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🧺</div>
+<div class="reward-text">
+<h4>Harvest Bags</h4>
+<p>Idle earnings collected in woven rattan bags. Tap them open for a satisfying pop animation.</p>
+</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">⭐</div>
+<div class="reward-text">
+<h4>Star Milestones</h4>
+<p>Reach coconut/fish milestones to earn golden star badges. Each star unlocks a new cosmetic or pet.</p>
+</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🎁</div>
+<div class="reward-text">
+<h4>Mystery Chest</h4>
+<p>Found floating down the river every 4 hours. Tap to open with a sparkle reveal animation.</p>
+</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🐾</div>
+<div class="reward-text">
+<h4>Pet Companions</h4>
+<p>Collect cute tropical pets (sun bear, hornbill, otter). Pets auto-collect nearby coins.</p>
+</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🏆</div>
+<div class="reward-text">
+<h4>Seasonal Festivals</h4>
+<p>Hari Raya, Harvest Moon, Rainy Season events with limited decorations and bonus gameplay.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 6. VISUAL STYLE -->
+<section class="section">
+<div class="section-label">06 — Visual Style</div>
+<div class="section-title">The Look & Feel</div>
+
+<div class="palette-strip" style="margin-bottom:2.5rem;">
+<div class="swatch" style="background:#FFB830"><span>Sunshine</span></div>
+<div class="swatch" style="background:#FF7F5C"><span>Coral</span></div>
+<div class="swatch" style="background:#48CAE4"><span>River</span></div>
+<div class="swatch" style="background:#52B788"><span>Leaf</span></div>
+<div class="swatch" style="background:#F4D5A0"><span>Sand</span></div>
+<div class="swatch" style="background:#FF6B6B"><span>Dusk</span></div>
+<div class="swatch" style="background:#8B5E3C"><span>Bark</span></div>
+<div class="swatch" style="background:#1A2744"><span>Night</span></div>
+<div class="swatch" style="background:#FFB3C6"><span>Blossom</span></div>
+</div>
+
+<!-- UI MOCKUP -->
+<div class="ui-mockup">
+<div class="ui-top-bar">
+<div class="ui-coin">🪙 1,240</div>
+<div class="ui-progress"><div class="ui-progress-fill"></div></div>
+<div class="ui-coin">💎 38</div>
+</div>
+<div style="text-align:center; font-family:'Bubblegum Sans',cursive; font-size:0.75rem; color:rgba(255,255,255,0.8); margin-bottom:0.75rem;">
+🌤️ Kampong Ayer — 3:14 PM
+</div>
+<div class="ui-scene">
+<div class="kampong-house">🏠</div>
+<div class="kampong-house">⛩️</div>
+<div class="kampong-house">🏪</div>
+</div>
+<div style="text-align:center; font-size:1.8rem; margin:0.5rem 0;">🌴&nbsp;&nbsp;🌊&nbsp;&nbsp;🌴</div>
+<div class="ui-tap-hint">👆 Tap a coconut tree to start!</div>
+</div>
+
+<div style="background:white; border-radius:20px; border:2px solid var(--sand); padding:1.5rem; box-shadow:0 4px 0 #e0c090;">
+<h4 style="font-family:'Bubblegum Sans',cursive; color:var(--bark); margin-bottom:1rem; font-size:1.05rem;">🎨 Art Direction</h4>
+<p style="font-size:0.82rem; line-height:1.7; color:#5A4030;">
+<strong>Style:</strong> Cozy anime-inspired 2D with soft cel shading. Characters have big expressive eyes and minimal outlines.<br><br>
+<strong>Lighting:</strong> Warm golden hour glow dominates. Dynamic day/night cycle with soft blue moonlight evenings.<br><br>
+<strong>Animation:</strong> Squash-and-stretch on every tap. Leaf wobble, water ripple, bouncing coins. No sharp or jarring movement.<br><br>
+<strong>Weather:</strong> Tropical rain = shimmery blue droplets + pond ripples. Sunny = lens flare shimmer. Storm = dramatic purple sky.<br><br>
+<strong>Fonts:</strong> Rounded, bubbly display font for UI. Clean legible body text. No serif or harsh edges anywhere.
+</p>
+</div>
+</section>
+
+<!-- 7. VIRAL FEATURES -->
+<section class="section">
+<div class="section-label">07 — Viral & Social Features</div>
+<div class="section-title">Made to Share</div>
+<div class="viral-grid">
+<div class="viral-card">
+<div class="vi">📸</div>
+<h4>Village Snapshot</h4>
+<p>One-tap screenshot of your kampong at golden hour — share directly to TikTok or Instagram</p>
+</div>
+<div class="viral-card">
+<div class="vi">🌧️</div>
+<h4>Rain Mode ASMR</h4>
+<p>Toggle rain for calming audio + visual. Hugely watchable and shareable on social</p>
+</div>
+<div class="viral-card">
+<div class="vi">🐾</div>
+<h4>Pet Reactions</h4>
+<p>Pets do silly dances when you reach milestones. Cute 3-second clips = viral moments</p>
+</div>
+<div class="viral-card">
+<div class="vi">🌅</div>
+<h4>Sunset Timer</h4>
+<p>A 10-minute golden-hour event with special music. Screenshot-worthy every time</p>
+</div>
+<div class="viral-card">
+<div class="vi">🏆</div>
+<h4>Village Ranking</h4>
+<p>Weekly leaderboard of cozy villages. No competition stress — just beauty ranking</p>
+</div>
+<div class="viral-card">
+<div class="vi">🎋</div>
+<h4>Friend Visits</h4>
+<p>Visit a friend's kampong and leave a gift. Social without pressure or competition</p>
+</div>
+</div>
+</section>
+
+<!-- 8. UI DESIGN -->
+<section class="section">
+<div class="section-label">08 — UI Design Philosophy</div>
+<div class="section-title">Simple. Calm. Clear.</div>
+<div class="mvp-list">
+<div class="mvp-item">
+<div class="mvp-num">A</div>
+<div class="mvp-text">
+<h4>Bottom Tab Nav</h4>
+<p>Village · Fish · Shop · Pet · Profile. Five icons, always visible, never cluttered.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">B</div>
+<div class="mvp-text">
+<h4>Top HUD</h4>
+<p>Coins left, gems right, XP bar center. Compact, readable at any brightness.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">C</div>
+<div class="mvp-text">
+<h4>Floating Rewards</h4>
+<p>Earned coins float upward from tap point. No pop-up interruptions — rewards drift naturally.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">D</div>
+<div class="mvp-text">
+<h4>Tap Feedback Ring</h4>
+<p>Every tap shows a ripple ring + sound. Instant, juicy confirmation of input.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">E</div>
+<div class="mvp-text">
+<h4>One-Tap Upgrades</h4>
+<p>Tap building → upgrade menu slides up smoothly. Max 2 options visible at once.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">F</div>
+<div class="mvp-text">
+<h4>No Intrusive Ads</h4>
+<p>Optional "watch for bonus" rewarded ads only. Always dismissible. Never auto-play.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 9. MVP SCOPE -->
+<section class="section">
+<div class="section-label">09 — MVP Scope</div>
+<div class="section-title">Build This First</div>
+<div class="mvp-list">
+<div class="mvp-item">
+<div class="mvp-num">1</div>
+<div class="mvp-text">
+<h4>One Tap Scene</h4>
+<p>One village view: 3 coconut trees + river. Tap to collect coins. That's the whole MVP loop.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">2</div>
+<div class="mvp-text">
+<h4>3 Upgradeable Buildings</h4>
+<p>Kedai (stall), Rumah (house), Pohon (tree). Each has 5 upgrade levels. Builds progression naturally.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">3</div>
+<div class="mvp-text">
+<h4>Basic Idle System</h4>
+<p>Earnings accumulate offline. Return, tap bag, collect reward. Simple and satisfying.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">4</div>
+<div class="mvp-text">
+<h4>Day/Night Cycle</h4>
+<p>Real-time or in-game clock shifts scene color. Morning blue → golden afternoon → dusk pink.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">5</div>
+<div class="mvp-text">
+<h4>1 Starter Pet</h4>
+<p>A tiny sun bear cub that sits near the river. It reacts to taps with cute animations.</p>
+</div>
+</div>
+<div class="mvp-item">
+<div class="mvp-num">6</div>
+<div class="mvp-text">
+<h4>Daily Login Reward</h4>
+<p>Simple 7-day chest rotation. Nothing complex — just a reason to open daily.</p>
+</div>
+</div>
+</div>
+<div style="background:#D4EDDA; border-radius:16px; padding:1.25rem 1.5rem; border:2px solid #8CD49A; font-size:0.82rem; line-height:1.7; color:#1A5E2A;">
+<strong>🛠️ Recommended Engine for Solo Dev:</strong><br>
+<strong>GDevelop</strong> (no-code, mobile export built-in, beginner-friendly) or <strong>Godot 4</strong> (free, lightweight, excellent 2D). Target build time: <strong>4–8 weeks</strong> for a polished MVP.
+</div>
+</section>
+
+<!-- 10. EXPANSION TIMELINE -->
+<section class="section">
+<div class="section-label">10 — Future Updates</div>
+<div class="section-title">The Roadmap Ahead</div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-dot dot-coral">V0</div>
+<div class="phase-badge badge-mvp">MVP Launch</div>
+<h4>🏡 Kampong Core</h4>
+<p>Tap coconuts, idle coins, 3 buildings, sun bear pet, daily login reward, day/night cycle. Soft launch for feedback.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot dot-teal">V1</div>
+<div class="phase-badge badge-v1">Update 1</div>
+<h4>🎣 River Expansion</h4>
+<p>Fishing mechanic, river delivery swipes, 3 new pet companions (hornbill, otter, monitor lizard), rain bonus event, screenshot sharing.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot dot-sun">V2</div>
+<div class="phase-badge badge-v2">Update 2</div>
+<h4>☕ Kedai Stories</h4>
+<p>Riverside café mini-game: serve teh tarik by tapping orders in time. New NPC characters. Cosmetic shop with traditional batik house skins.</p>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot dot-green">🎉</div>
+<div class="phase-badge badge-season">Seasonal</div>
+<h4>🌙 Hari Raya Festival</h4>
+<p>Limited-time decorations: pelita lamps, kuih stalls, ketupat trees. Special golden kampong skin. Exclusive Eid pet: a baby deer with a songket collar.</p>
+</div>
+</div>
+</section>
+
+<!-- FINAL EMOTIONAL GOAL -->
+<section class="section">
+<div class="section-label">The Vision</div>
+<div class="footer-card">
+<div class="footer-stars">🌴 ✨ 🌅 ✨ 🌴</div>
+<div class="footer-quote">
+"A peaceful tropical comfort game you casually open every day to relax for a few quiet minutes — and always feel better for it."
+</div>
+<div class="footer-sub">KAMPONG BLISS &nbsp;·&nbsp; MADE WITH 💛 &nbsp;·&nbsp; INSPIRED BY BRUNEI DARUSSALAM</div>
+</div>
+</section>
+
+</body>
+</html>
+
